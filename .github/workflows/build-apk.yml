@@ -1,0 +1,87 @@
+name: Build APK
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Clear Buildozer cache
+      run: |
+        rm -rf ~/.buildozer
+        rm -rf .buildozer
+    
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.10.11
+
+    - name: Set up Java 8
+      uses: actions/setup-java@v2
+      with:
+        java-version: '8'
+        distribution: 'adopt'
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y build-essential libssl-dev libffi-dev python3-dev
+        sudo apt-get install -y git zip unzip autoconf libtool pkg-config
+        sudo apt-get install -y python3-setuptools python3-pip
+        pip install --upgrade pip
+        pip install --upgrade cython virtualenv buildozer
+        pip install --upgrade buildozer
+        buildozer --version
+
+    - name: Set up Android SDK
+      run: |
+        mkdir -p $HOME/android-sdk
+        echo "ANDROID_HOME=$HOME/android-sdk" >> $GITHUB_ENV
+        echo "ANDROID_SDK_ROOT=$HOME/android-sdk" >> $GITHUB_ENV
+        echo "ANDROID_NDK_HOME=$HOME/android-sdk/ndk/25.2.9519653" >> $GITHUB_ENV
+        echo "$HOME/android-sdk/tools/bin" >> $GITHUB_PATH
+        echo "$HOME/android-sdk/platform-tools" >> $GITHUB_PATH
+
+    - name: Install Android SDK
+      run: |
+        wget https://dl.google.com/android/repository/commandlinetools-linux-8512546_latest.zip
+        unzip commandlinetools-linux-8512546_latest.zip -d $HOME/android-sdk/cmdline-tools
+        mv $HOME/android-sdk/cmdline-tools/cmdline-tools $HOME/android-sdk/cmdline-tools/latest
+        rm commandlinetools-linux-8512546_latest.zip
+        yes | $HOME/android-sdk/cmdline-tools/latest/bin/sdkmanager --licenses
+        $HOME/android-sdk/cmdline-tools/latest/bin/sdkmanager "platform-tools" "platforms;android-30" "build-tools;30.0.3" "ndk;25.2.9519653"
+
+    - name: Update buildozer.spec
+      run: |
+        sed -i 's|android.sdk_path = .*|android.sdk_path = '$HOME/android-sdk'|g' buildozer.spec
+        sed -i 's|android.ndk_path = .*|android.ndk_path = '$HOME/android-sdk/ndk/25.2.9519653'|g' buildozer.spec
+
+    - name: Show buildozer.spec
+      run: cat buildozer.spec
+
+    - name: Build APK
+      run: |
+        buildozer android debug
+      continue-on-error: true
+
+    - name: Display Buildozer log
+      if: always()
+      run: |
+        echo "Buildozer log:"
+        cat .buildozer/logs/buildozer.log
+
+    - name: Display Gradle log
+      if: always()
+      run: |
+        echo "Gradle log:"
+        cat .buildozer/android/platform/build-*/dists/*/gradle*.log || true
+
+    - name: Upload APK
+      uses: actions/upload-artifact@v2
+      with:
+        name: app-debug.apk
+        path: bin/*.apk
