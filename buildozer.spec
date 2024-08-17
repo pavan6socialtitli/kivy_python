@@ -37,7 +37,7 @@ version = 0.1
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = python3,kivy,kivymd,pillow,libffi,asttokens,asyncgui,asynckivy,bidict,certifi,chardet,charset-normalizer,colorama,comm,debugpy,decorator,docutils,exceptiongroup,executing,h11,idna,ipykernel,ipython,jedi,jupyter_client,jupyter_core,kaki,kivy-deps.angle,kivy-deps.glew,kivy-deps.sdl2,Kivy-Garden,materialyoucolor,matplotlib-inline,nest-asyncio,numpy,packaging,pandas,parso,platformdirs,prompt_toolkit,psutil,pure-eval,Pygments,pyjsparser,PyJWT,pypiwin32,python-dateutil,python-dotenv,python-engineio,python-socketio,pytz,pyzmq,requests,simple-websocket,six,stack-data,tornado,traitlets,typing_extensions,tzdata,urllib3,watchdog,wcwidth,websocket-client,websockets,wsproto
+requirements = python3,kivy,kivymd,pillow,libffi,asttokens,asyncgui,asynckivy,bidict,certifi,chardet,charset-normalizer,colorama,comm,debugpy,decorator,docutils,exceptiongroup,executing,h11,idna,ipykernel,ipython,jedi,jupyter_client,jupyter_core,kaki,kivy-deps.angle,kivy-deps.glew,kivy-deps.sdl2,Kivy-Garden,materialyoucolor,matplotlib-inline,nest-asyncio,numpy,packaging,pandas,parso,platformdirs,prompt_toolkit,psutil,pure-eval,Pygments,pyjsparser,PyJWT,pypiwin32,python-dateutil,python-dotenv,python-engineio,python-socketio,pytz,pyzmq,requests,simple-websocket,six,stack-data,tornado,traitlets,typing_extensions,tzdata,urllib3,watchdog,wcwidth,websocket-client,websockets,wsproto,autopoint,gettext,neo-api-client
 
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
