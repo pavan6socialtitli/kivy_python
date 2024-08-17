@@ -10,13 +10,13 @@ package.name = TradingApp
 package.domain = org.test
 
 # (str) Source code where the main.py live
-source.dir = .
+source.dir = ./
 
 # (list) Source files to include (let empty to include all the files)
 source.include_exts = py,png,jpg,kv,atlas,json,ttf
 
 # (list) List of inclusions using pattern matching
-#source.include_patterns = *.png,fonts/*.ttf
+source.include_patterns = *.png,fonts/*.ttf
 
 # (list) Source files to exclude (let empty to not exclude anything)
 #source.exclude_exts = spec
@@ -122,7 +122,7 @@ android.private_storage = True
 #android.ndk_path = /home/runner/android-sdk/ndk/
 
 # (str) Android SDK directory (if empty, it will be automatically downloaded.)
-android.sdk_path = /home/runner/android-sdk
+#android.sdk_path = /home/runner/android-sdk
 
 # (str) ANT directory (if empty, it will be automatically downloaded.)
 #android.ant_path =
@@ -308,7 +308,7 @@ android.allow_backup = True
 # android.release_artifact = aab
 
 # (str) The format used to package the app for debug mode (apk or aar).
-# android.debug_artifact = apk
+android.debug_artifact = apk
 
 #
 # Python for android (p4a) specific
@@ -402,7 +402,7 @@ ios.codesign.allowed = false
 [buildozer]
 
 # (int) Log level (0 = error only, 1 = info, 2 = debug (with command output))
-log_level = 3
+log_level = 2
 
 # (int) Display warning if buildozer is run as root (0 = False, 1 = True)
 warn_on_root = 1
